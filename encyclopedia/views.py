@@ -39,6 +39,7 @@ I'm adding the word "entry" to see if, instead of "CSS", the "get_entry" will gr
 (see "urls.py" in the encyclopedia directory for more info.) That is, if the user types "127.0.0.1/CSS" or 
 "127.0.0.1/Django", the user will enter into the CSS and the Django wiki entries, respectively. The "entry" variable
 is grabbing a word from "urls.py"m which is grabbing a word from the URL which is being typed by the user. IT WORKED.
+Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ 
 """
 def wiki_article(request, entry):
     return render(request, "encyclopedia/index.html", {

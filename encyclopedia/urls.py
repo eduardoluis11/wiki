@@ -15,7 +15,7 @@ urlpatterns = [
 
     # Now, I will use "<str:entry>" so that, when the user types "127.0.0.1/CSS" or "127.0.0.1/Git"m the will go
     # to the CSS or Git wiki article, respectively. This may fail though. I need to put "entry" in "views.py".
-    # IT WORKED PERFECTLY.
+    # IT WORKED PERFECTLY. Source: https://docs.djangoproject.com/en/3.1/topics/http/urls/ .
 
     # Now, I will modify this so that the URL format is "127.0.0.1/wiki/TITLE" (just like the homework asks me to.)
     # IT WORKS.
