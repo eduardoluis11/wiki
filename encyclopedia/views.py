@@ -8,3 +8,8 @@ def index(request):
         "entries": util.list_entries()
     })
 
+# This will show the page defined on the "test.html" file. I need to add "test"
+# in "urls.py". IT WORKS.
+def test(request):
+    return render(request, "encyclopedia/test.html")
+
