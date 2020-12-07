@@ -34,11 +34,30 @@ I needed to put "CSS" between quotation marks to make it work.
 
 Now, I need to edit it so that it detects the name of ANY of the entries (CSS, Django, Git, etc.) I think that this
 tutorial from freecodecamp may help me: https://www.youtube.com/watch?v=F5mRW0jo-U4&t=11061s .
+
+I'm adding the word "entry" to see if, instead of "CSS", the "get_entry" will grab the user input on the url 
+(see "urls.py" in the encyclopedia directory for more info.) That is, if the user types "127.0.0.1/CSS" or 
+"127.0.0.1/Django", the user will enter into the CSS and the Django wiki entries, respectively. The "entry" variable
+is grabbing a word from "urls.py"m which is grabbing a word from the URL which is being typed by the user. IT WORKED.
 """
-
-
-def wiki_article(request):
+def wiki_article(request, entry):
     return render(request, "encyclopedia/index.html", {
-        "entries": util.get_entry("CSS")
+        "entries": util.get_entry(entry)
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
