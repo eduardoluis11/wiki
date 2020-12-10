@@ -6,6 +6,9 @@ from . import util
 # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/
 from django.shortcuts import get_object_or_404
 
+# This will allow me to use the function that shows the "404: Page not found" error.
+# Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ .
+from django.http import Http404
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -60,7 +63,8 @@ def wiki_article(request, word):
     # Django/Python will return "None" (like "Null" in other languages). Therefore, "article" will be "None" if I type
     # the wrong word in the url article, this will execute. THIS WORKED.
     if article is None:
-        return render(request, "encyclopedia/test.html")
+        # This will show the "This page does not exist" error message.
+        raise Http404("This page does not exist.")
 
     # This will return an error message if the user enters a wrong name for an entry (that is, if "entry" returns
     # "None")
