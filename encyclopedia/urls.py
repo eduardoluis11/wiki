@@ -19,7 +19,7 @@ urlpatterns = [
 
     # Now, I will modify this so that the URL format is "127.0.0.1/wiki/TITLE" (just like the homework asks me to.)
     # IT WORKS.
-    # I will change the word "entry" by "word" in "<str:" so that I don't get confused by using the word "entry" so much.
-    # Now, I need to go to "views.py", and put the word "word".
+    # I will change the word "entry" by "word" in "<str:" so that I don't get confused by using the word "entry" so
+    # much. Now, I need to go to "views.py", and put the word "word".
     path("wiki/<str:word>", views.wiki_article, name="wiki_article"),
 ]

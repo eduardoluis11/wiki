@@ -52,6 +52,16 @@ I changed the word "entry" by "word" in both the function wiki_article() and on 
 that that word is the one being typed by the user (the one obtained by "<str:" in urlpatterns.)
 """
 def wiki_article(request, word):
+    # I will get the word from "<str:" from urlpatterns from urls.py by assigning a variable and using the
+    # util.get_entry() function. This will let me to easily manipulate the word obtained.
+    article = util.get_entry(word)
+
+    # If I insert the wrong word (that is, a non-existent wiki entry) into "wiki/article_name" while typing on the URL,
+    # Django/Python will return "None" (like "Null" in other languages). Therefore, "article" will be "None" if I type
+    # the wrong word in the url article, this will execute. THIS WORKED.
+    if article is None:
+        return render(request, "encyclopedia/test.html")
+
     # This will return an error message if the user enters a wrong name for an entry (that is, if "entry" returns
     # "None")
     # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/
@@ -60,10 +70,16 @@ def wiki_article(request, word):
     #     message = util.get_entry(entry)
     # except None:
     #     raise Http404("This page does not exist")
+
+    # If the user types the right article name (be it because it's one of the 6 entries that came by default with
+    # this source code, or be it because the user created a new article), this will send the user to that wiki article.
     return render(request, "encyclopedia/index.html", {
         # I will use the word "word" instead of "entry" to know that this word is the one being obtained from
         # urlpatterns from "urls.py". IT WORKS PERFECTLY.
-        "entries": util.get_entry(word)
+
+        # The word between quotation marks needs to be "entries" or won't work. I will insert here the "article"
+        # variable (the word typed by the user on the URL bar.) This seems to be like sanitizing data in PHP.
+        "entries": article
     })
 
 
