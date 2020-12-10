@@ -2,6 +2,10 @@ from django.shortcuts import render
 
 from . import util
 
+# This will allow me to show a "404: page not found" error.
+# Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/
+from django.shortcuts import get_object_or_404
+
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -40,11 +44,29 @@ I'm adding the word "entry" to see if, instead of "CSS", the "get_entry" will gr
 "127.0.0.1/Django", the user will enter into the CSS and the Django wiki entries, respectively. The "entry" variable
 is grabbing a word from "urls.py"m which is grabbing a word from the URL which is being typed by the user. IT WORKED.
 Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ 
+
+If the word stored in "entry" is not one of the wiki's entries, the "get_entry()" function will return "None". 
+I want to raise a "404" error if "None2 is returned (I will display the message "page not found".)
+
+I changed the word "entry" by "word" in both the function wiki_article() and on "util.get_entry(word)" so that I know
+that that word is the one being typed by the user (the one obtained by "<str:" in urlpatterns.)
 """
-def wiki_article(request, entry):
+def wiki_article(request, word):
+    # This will return an error message if the user enters a wrong name for an entry (that is, if "entry" returns
+    # "None")
+    # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/
+    # question = get_object_or_404(entry)
+    # try:
+    #     message = util.get_entry(entry)
+    # except None:
+    #     raise Http404("This page does not exist")
     return render(request, "encyclopedia/index.html", {
-        "entries": util.get_entry(entry)
+        # I will use the word "word" instead of "entry" to know that this word is the one being obtained from
+        # urlpatterns from "urls.py". IT WORKS PERFECTLY.
+        "entries": util.get_entry(word)
     })
+
+
 
 
 
