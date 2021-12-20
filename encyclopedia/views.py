@@ -77,18 +77,25 @@ def wiki_article(request, word):
 
     # If the user types the right article name (be it because it's one of the 6 entries that came by default with
     # this source code, or be it because the user created a new article), this will send the user to that wiki article.
-    return render(request, "encyclopedia/index.html", {
+    #
+    # I created a file called "display_entry.html", which is where I will redirect the user if they type an
+    # existing entry name. There, I have a template (like layout.html), but that I will only use to show each entry.
+    return render(request, "encyclopedia/display_entry.html", {
         # I will use the word "word" instead of "entry" to know that this word is the one being obtained from
         # urlpatterns from "urls.py". IT WORKS PERFECTLY.
 
-        # The word between quotation marks needs to be "entries" or won't work. I will insert here the "article"
-        # variable (the word typed by the user on the URL bar.) This seems to be like sanitizing data in PHP.
+        # The word between quotation marks needs to be "entries" or won't work. I think that's because "entries" is the
+        # name of the folder that contains all of the articles as ".md" files.
+        #
+        # I will insert here the "article" variable (the word typed by the user on the URL bar.) This seems to be like
+        # sanitizing data in PHP.
         "entries": article
     })
 
-
-
-
+# def get_title(request):
+#     return render(request, "encyclopedia/display_entry.html", {
+#         "entries": util.list_entries()
+#     })
 
 
 
