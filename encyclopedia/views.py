@@ -2,6 +2,12 @@ from django.shortcuts import render
 
 from . import util
 
+# This will let me use "markdown", the package that converts Markdown into HTMl, so that the 
+# text from the entry file is properly displayed instead of having the werid spaces, and so 
+# the "#" characters convert the Markdown text into bold or italics when displayed in the web app
+# (source: https://github.com/trentm/python-markdown2). 
+import markdown2
+
 # This will allow me to show a "404: page not found" error.
 # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/
 from django.shortcuts import get_object_or_404
@@ -53,11 +59,16 @@ I want to raise a "404" error if "None2 is returned (I will display the message 
 
 I changed the word "entry" by "word" in both the function wiki_article() and on "util.get_entry(word)" so that I know
 that that word is the one being typed by the user (the one obtained by "<str:" in urlpatterns.)
+
+To properly convert from Markdown into HTML so that the entry text doesn't have any weird space between 
+each letter, and so that the "#" characters are able to make the text bold or italices (as it should in Markdown
+format), I will use the "markdown.markdown(ENTRY_TEXT_VARIABLE)" function from the markdown2 package 
+(source: https://github.com/trentm/python-markdown2 .)
 """
 def wiki_article(request, word):
     # I will get the word from "<str:" from urlpatterns from urls.py by assigning a variable and using the
     # util.get_entry() function. This will let me to easily manipulate the word obtained.
-    article = util.get_entry(word)
+    article = markdown2.markdown(util.get_entry(word))
 
     # If I insert the wrong word (that is, a non-existent wiki entry) into "wiki/article_name" while typing on the URL,
     # Django/Python will return "None" (like "Null" in other languages). Therefore, "article" will be "None" if I type
@@ -89,7 +100,7 @@ def wiki_article(request, word):
         #
         # I will insert here the "article" variable (the word typed by the user on the URL bar.) This seems to be like
         # sanitizing data in PHP.
-        "entries": article
+        "entries": article 
     })
 
 # def get_title(request):
