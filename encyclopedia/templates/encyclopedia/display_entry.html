@@ -44,16 +44,23 @@ I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-ti
     display the error message. Otherwise, I will display the entry.
 
     I need to check if the "entries" 'array' is equal to not found. If I use "entry"
-    instead, I will get "n o t f o u n d" as the entry's text.  
+    instead, I will get "n o t f o u n d" as the entry's text.
+
+    To fix the bug that was causing me to print an extra space between each character while printing the entry (i.e:
+    "CSS" was being printed as "C S S"), I needed to remove teh for loop that I was using to print the entry, and,
+    instead, I was just printing the whole "array" that contained the entry  (i.e: instead of using "for entry in
+    entries", I just used "{{entry}}" instead.)
     -->
     {% if entries == 'not found' %}
         <h1>Page Not Found</h1>
         <p>Sorry, but this entry does not exist.</p>
     {% else %}
-        {% for entry in entries %}
-            {{entry}}
-        {% endfor %}
+        {{entries}}
     {% endif %}
+
+    <!-- I will use this to see if I'm getting the name of the .md file, which is what I'll use as the entry's title.
+     It didn't work. -->
+    {{titles}}
 
     
 

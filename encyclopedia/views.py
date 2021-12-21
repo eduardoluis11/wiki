@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.core.files.storage import default_storage   # This imports the default_storage() function
+
+""" This will allow me to only extract the name of the .md file from a PATH. Source: 
+https://www.techiedelight.com/get-filename-without-extension-python/ """
+import os
 
 from . import util
 
@@ -73,10 +78,14 @@ def wiki_article(request, word):
     # the wrong word in the url article, this will execute. THIS WORKED.
     """ To display an error message of 'Page not found', and avoid the error message saying "Type Error", 
     I added an if statement that checks if the entry exists. If it doesn't exist, I will get a "None" type.
-    In that case, I will 'break the loop' to avoid getting the "Type Error", and I will assign a value
+    In that case, I will 'break the loop' to avoid getting the "Type Error", and I will assign a custom value
     to the "article" variable to tell display_entry.html to display an error message using <h1> and <p> tags.
     
-    And, if the entry exists, I will simply insert the entry text as HTML into the "article" variable. """
+    And, if the entry exists, I will simply insert the entry text as HTML into the "article" variable.
+
+    Since the value being returned by get_entry() is an f.read(), which is an opened file, I will use the ".name"
+    property to get the name of that file, which I will use as the title for that entry.
+    """
     if util.get_entry(word) is None:
         # This will show the "This page does not exist" error message using a Django template. I don't
         # want to use this any longer since I prefer showing a simpler error message using <h1> and <p> tags.
@@ -86,6 +95,20 @@ def wiki_article(request, word):
         # I will get the word from "<str:" from urlpatterns from urls.py by assigning a variable and using the
         # util.get_entry() function. This will let me to easily manipulate the word obtained.
         article = markdown2.markdown(util.get_entry(word))
+
+        # This will store the name of the .md file from which I'm getting the entry.
+        file = default_storage.open(f"entries/{word}.md")
+
+        """ These two lines will get the name of the file from the PATH of the .md file that has the text for the 
+        current entry, which is what I want to use as the title (source: 
+        https://stackoverflow.com/questions/323515/how-to-get-the-name-of-an-open-file/324326 .) The problem with
+        this is that the text is always being converted into lowercase. I want to have upper-case and lower-case 
+        letters if the original name of the file hs both upper and lower case letters. """
+        file_name = file.name
+        title = os.path.basename(file_name)
+
+        # title = util.get_entry(word).name
+
 
     # This will return an error message if the user enters a wrong name for an entry (that is, if "entry" returns
     # "None")
@@ -101,6 +124,8 @@ def wiki_article(request, word):
     #
     # I created a file called "display_entry.html", which is where I will redirect the user if they type an
     # existing entry name. There, I have a template (like layout.html), but that I will only use to show each entry.
+    """ I will also return the title of the text file that contains that entry (since I will use that as the title
+    of the article, which will show up on the browser's tab.) """
     return render(request, "encyclopedia/display_entry.html", {
         # I will use the word "word" instead of "entry" to know that this word is the one being obtained from
         # urlpatterns from "urls.py". IT WORKS PERFECTLY.
@@ -110,7 +135,8 @@ def wiki_article(request, word):
         #
         # I will insert here the "article" variable (the word typed by the user on the URL bar.) This seems to be like
         # sanitizing data in PHP.
-        "entries": article 
+        "entries": article,
+        "titles": title
     })
 
 # def get_title(request):
