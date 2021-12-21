@@ -5,9 +5,12 @@
 <!-- I need to insert python code in here to dynamically show the name of the article in the web browser's tag.
 NEITHER "word" NOR "variables" WORK IF I USE THEM AS A TITLE.
 
-I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-titles-in-django/ .-->
+I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-titles-in-django/ .
+
+I will use "title" to see if I'm getting the name of the .md file, which is what I'll use as the entry's title. I need to use 
+"title", NOT "fixed_title", since that's the name that I gave to the variable in views.py.-->
 {% block title %}
-    {{article}}
+    {{title}}
 {% endblock %}
 
 {% block body %}
@@ -61,8 +64,9 @@ I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-ti
         {{entries|safe}}
     {% endif %}
 
-    <!-- I will use this to see if I'm getting the name of the .md file, which is what I'll use as the entry's title. -->
-   {{title}}
+    <!-- I will use this to see if I'm getting the name of the .md file, which is what I'll use as the entry's title.
+    I need to use "title", NOT "fixed_title", since that's the name that I gave to the variable in views.py. -->
+    <!-- {{title}} -->
 
     
 
