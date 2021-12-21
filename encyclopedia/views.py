@@ -85,6 +85,24 @@ def wiki_article(request, word):
 
     Since the value being returned by get_entry() is an f.read(), which is an opened file, I will use the ".name"
     property to get the name of that file, which I will use as the title for that entry.
+
+     After further consideration, I won't obtain the title using the filename, since I would need a library that 
+    seems to be exclusive for Windows machines.
+
+    To get the title, I may use a regular expression. I may read the 1st line of the text from the “entries” variable, 
+    which is where the title with the correct casing is stored. So, I will read that 1st line, and I will stop reading 
+    once I find a line break (\n). I don’t want the “#” sign either. So, I could try using a regular expression that 
+    checks for a word on the “entries” variable that starts at the space after the “#” sign, and ends at the first “\n” 
+    on the 1st line.
+
+	I don’t want to get the title by reading the filename since I would need to use a library that’s for Windows machines. 
+    So, if the code were stored or rendered on a Mac, the title would have every letter in lower-case. So, using the win32 
+    library is not a universal solution.
+
+	I could use a function in Python that splits all the text and inserts it into an array, which, in my case, it would be 
+    the split() function (source: https://www.codegrepper.com/code-examples/python/extract+text+before+specific+word+python ). 
+    Each section of the text would be inserted as an element of that array. The character that would be used for splitting 
+    the entry text would be the line break, that is, “\n”. 
     """
     if util.get_entry(word) is None:
         # This will show the "This page does not exist" error message using a Django template. I don't
@@ -96,16 +114,24 @@ def wiki_article(request, word):
         # util.get_entry() function. This will let me to easily manipulate the word obtained.
         article = markdown2.markdown(util.get_entry(word))
 
+        """ I will use this to get the "#" sign instead of transforming that sign into an <h1> tag. I will do this
+        to extract the title of the md file. """
+        article_md_format = util.get_entry(word)
+
         # This will store the name of the .md file from which I'm getting the entry.
-        file = default_storage.open(f"entries/{word}.md")
+        # file = default_storage.open(f"entries/{word}.md")
 
         """ These two lines will get the name of the file from the PATH of the .md file that has the text for the 
         current entry, which is what I want to use as the title (source: 
         https://stackoverflow.com/questions/323515/how-to-get-the-name-of-an-open-file/324326 .) The problem with
         this is that the text is always being converted into lowercase. I want to have upper-case and lower-case 
-        letters if the original name of the file hs both upper and lower case letters. """
-        file_name = file.name
-        title = os.path.basename(file_name)
+        letters if the original name of the file hs both upper and lower case letters. 
+        """
+        # This splits the text and obtains the .md file’s title
+        title = article_md_format.split('\n')[0]
+
+        # file_name = file.name
+        # title = os.path.basename(file_name)
 
         # title = util.get_entry(word).name
 
@@ -136,7 +162,7 @@ def wiki_article(request, word):
         # I will insert here the "article" variable (the word typed by the user on the URL bar.) This seems to be like
         # sanitizing data in PHP.
         "entries": article,
-        "titles": title
+        "title": title
     })
 
 # def get_title(request):
