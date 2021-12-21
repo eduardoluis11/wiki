@@ -66,16 +66,26 @@ format), I will use the "markdown.markdown(ENTRY_TEXT_VARIABLE)" function from t
 (source: https://github.com/trentm/python-markdown2 .)
 """
 def wiki_article(request, word):
-    # I will get the word from "<str:" from urlpatterns from urls.py by assigning a variable and using the
-    # util.get_entry() function. This will let me to easily manipulate the word obtained.
-    article = markdown2.markdown(util.get_entry(word))
+    # article = markdown2.markdown(util.get_entry(word))
 
     # If I insert the wrong word (that is, a non-existent wiki entry) into "wiki/article_name" while typing on the URL,
     # Django/Python will return "None" (like "Null" in other languages). Therefore, "article" will be "None" if I type
     # the wrong word in the url article, this will execute. THIS WORKED.
-    if article is None:
-        # This will show the "This page does not exist" error message.
-        raise Http404("This page does not exist.")
+    """ To display an error message of 'Page not found', and avoid the error message saying "Type Error", 
+    I added an if statement that checks if the entry exists. If it doesn't exist, I will get a "None" type.
+    In that case, I will 'break the loop' to avoid getting the "Type Error", and I will assign a value
+    to the "article" variable to tell display_entry.html to display an error message using <h1> and <p> tags.
+    
+    And, if the entry exists, I will simply insert the entry text as HTML into the "article" variable. """
+    if util.get_entry(word) is None:
+        # This will show the "This page does not exist" error message using a Django template. I don't
+        # want to use this any longer since I prefer showing a simpler error message using <h1> and <p> tags.
+        # raise Http404("This page does not exist.")
+        article = 'not found'
+    else:
+        # I will get the word from "<str:" from urlpatterns from urls.py by assigning a variable and using the
+        # util.get_entry() function. This will let me to easily manipulate the word obtained.
+        article = markdown2.markdown(util.get_entry(word))
 
     # This will return an error message if the user enters a wrong name for an entry (that is, if "entry" returns
     # "None")

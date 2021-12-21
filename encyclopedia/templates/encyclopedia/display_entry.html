@@ -21,10 +21,41 @@ I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-ti
 
     In the "index.html" file, If I'm at "127.0.0.1", this displays all of the articles. However, If I'm at
     "127.0.0.1/wiki/article_name", this displays me all of the text from the ".md" files in a weird format, that is.
-    it displays me the content for that article. -->
-    {% for entry in entries %}
-        {{ entry }}
-    {% endfor %}
+    it displays me the content for that article. 
+
+    To display an error message if the entry doesn't exist, I can use an “if” 
+    statement. If the entry exists, I will print the 
+    respective .md file of that entry. Meanwhile, if the entry does not exist, I will 
+    print an error message saying “page not found”. I won’t make a complex error 
+    message using Django’s back end. I will simply use an <h1> tag and a <p> tag 
+    for the error message.
+    
+    To check whether the entry exists or not, I could check the value being returned
+    from util.py or from the get_entry() function. If the entry doesn’t exist, that 
+    function will return “None”. 
+    
+    So, I will check if “None” is being returned. If it is, the entry doesn’t exist 
+    and I will have to display the error message. Otherwise, I will display the 
+    existing entry.
+
+    I could check if a variable is equal to “not found”. So, the “if” 
+    condition on the Django template in the display_entry.html file will check if 
+    the “entry” variable is “not found”. If it is, the entry doesn’t exist, so I will 
+    display the error message. Otherwise, I will display the entry.
+
+    I need to check if the "entries" 'array' is equal to not found. If I use "entry"
+    instead, I will get "n o t f o u n d" as the entry's text.  
+    -->
+    {% if entries == 'not found' %}
+        <h1>Page Not Found</h1>
+        <p>Sorry, but this entry does not exist.</p>
+    {% else %}
+        {% for entry in entries %}
+            {{entry}}
+        {% endfor %}
+    {% endif %}
+
+    
 
 
 {% endblock %}
