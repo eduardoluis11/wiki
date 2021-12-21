@@ -110,12 +110,18 @@ def wiki_article(request, word):
     https://www.journaldev.com/23674/python-remove-character-from-string .)
 	
     I will replace the “# ” from the title by an empty space to remove it by using the replace() function.
+
+    I will assign an error message to both the "article" and "fixed_title" variables so that, if the user types a wrong
+    entry on the URL, I won't get an error message from Django (with the yellow background). Instead, I will get a
+    "Page Not Found" message on the browser's tab, and a custom error message that I made using <h1> and <p> as 
+    the entry.  
     """
     if util.get_entry(word) is None:
         # This will show the "This page does not exist" error message using a Django template. I don't
         # want to use this any longer since I prefer showing a simpler error message using <h1> and <p> tags.
         # raise Http404("This page does not exist.")
         article = 'not found'
+        fixed_title = 'Page Not Found'
     else:
         # I will get the word from "<str:" from urlpatterns from urls.py by assigning a variable and using the
         # util.get_entry() function. This will let me to easily manipulate the word obtained.
