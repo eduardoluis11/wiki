@@ -17,3 +17,5 @@ INSERT IN CITATION MACHINE BEFORE TURNING THIS IN:
 7) https://stackoverflow.com/questions/323515/how-to-get-the-name-of-an-open-file/324326
 
 8) https://docs.djangoproject.com/en/3.1/topics/http/urls/
+
+9) https://www.journaldev.com/23674/python-remove-character-from-string

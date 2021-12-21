@@ -103,6 +103,13 @@ def wiki_article(request, word):
     the split() function (source: https://www.codegrepper.com/code-examples/python/extract+text+before+specific+word+python ). 
     Each section of the text would be inserted as an element of that array. The character that would be used for splitting 
     the entry text would be the line break, that is, “\n”. 
+
+    However, the problem with suing split() as I mentioned in the previous paragraph is that I will also grab the “#” sign 
+    and a space alongside teh title (i.e: I will grab “# CSS” instead of “CSS”). So, I need to remove the first 2 characters 
+    (“#” and the space). To do this, I will use the replace() function from Python (source: 
+    https://www.journaldev.com/23674/python-remove-character-from-string .)
+	
+    I will replace the “# ” from the title by an empty space to remove it by using the replace() function.
     """
     if util.get_entry(word) is None:
         # This will show the "This page does not exist" error message using a Django template. I don't
@@ -129,6 +136,9 @@ def wiki_article(request, word):
         """
         # This splits the text and obtains the .md file’s title
         title = article_md_format.split('\n')[0]
+
+        # This will remove the "# " characters from the title
+        fixed_title = title.replace('# ', '')
 
         # file_name = file.name
         # title = os.path.basename(file_name)
@@ -162,7 +172,7 @@ def wiki_article(request, word):
         # I will insert here the "article" variable (the word typed by the user on the URL bar.) This seems to be like
         # sanitizing data in PHP.
         "entries": article,
-        "title": title
+        "title": fixed_title
     })
 
 # def get_title(request):
