@@ -50,17 +50,20 @@ I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-ti
     "CSS" was being printed as "C S S"), I needed to remove teh for loop that I was using to print the entry, and,
     instead, I was just printing the whole "array" that contained the entry  (i.e: instead of using "for entry in
     entries", I just used "{{entry}}" instead.)
+
+    Then, I added the "|safe" attribute so that the HTML tags (h1 and p) were parsed, so that the Markdown notation
+    is finally being properly converted into HTML.
     -->
     {% if entries == 'not found' %}
         <h1>Page Not Found</h1>
         <p>Sorry, but this entry does not exist.</p>
     {% else %}
-        {{entries}}
+        {{entries|safe}}
     {% endif %}
 
     <!-- I will use this to see if I'm getting the name of the .md file, which is what I'll use as the entry's title.
      It didn't work. -->
-    {{titles}}
+<!--    {{titles}}-->
 
     
 
