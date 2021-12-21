@@ -1,0 +1,30 @@
+<!-- This is the html file that will display the title of each entry. -->
+{% extends "encyclopedia/layout.html" %}
+
+<!-- This is the <title> html tag. This displays the entry's title on the web browser's tab. -->
+<!-- I need to insert python code in here to dynamically show the name of the article in the web browser's tag.
+NEITHER "word" NOR "variables" WORK IF I USE THEM AS A TITLE.
+
+I will use this tutorial: https://iheanyi.com/journal/2020/04/04/dynamic-page-titles-in-django/ .-->
+{% block title %}
+    {{article}}
+{% endblock %}
+
+{% block body %}
+    <!-- This shows the title of the page in <h1> tags. I will also modify this to show the title of the entry article.
+        
+    I don't need this: the markdown notation from the md files will already put an h1 tag to the titles. -->
+    <!-- <h1>All Pages</h1> -->
+
+    <!-- I removed the <ul> and the <li> tags to make the entry pages more readable (though it has some extra
+    spaces that I need to remove.)
+
+    In the "index.html" file, If I'm at "127.0.0.1", this displays all of the articles. However, If I'm at
+    "127.0.0.1/wiki/article_name", this displays me all of the text from the ".md" files in a weird format, that is.
+    it displays me the content for that article. -->
+    {% for entry in entries %}
+        {{ entry }}
+    {% endfor %}
+
+
+{% endblock %}
