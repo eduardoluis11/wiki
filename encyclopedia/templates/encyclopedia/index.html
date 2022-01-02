@@ -8,8 +8,11 @@
     <h1>All Pages</h1>
 
     <ul>
+        <!-- I will add an "<a>" tag so that each title of each entry becomes a link. Then, I only need to get 
+        the respective title of each respective entry, and put it inside of the "href" property, so that 
+        each link sends the user to the corresponding entry. -->
         {% for entry in entries %}
-            <li>{{ entry }}</li>
+            <li><a href="/wiki/{{entry}}">{{ entry }}</a></li>
         {% endfor %}
     </ul>
 
