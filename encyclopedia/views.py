@@ -234,6 +234,65 @@ def random_article(request):
         "title": fixed_title
     })
 
+""" This will make the user enter into an entry page if the type an existent entry name, or to a list of pages
+with a name similar to what they typed on the search bar.
+
+If I write anything on the search bar and I hit the Enter key, the URL of the site will change to 
+“http://127.0.0.1:8000/?q=harvard”. I only want the text that’s after the “q=” (which, in this case, it’s “harvard”). 
+Then, I will grab that text, and compare it to the existing entries of the wiki.
+
+If the entry exists (I will use an “if” statement), I will take the user to that entry. I could do that by taking them 
+to “/wiki/(text obtained from the text typed by the user on the search bar)”.
+
+I will look for a python function that allows me to search for text from a string AFTER a specific character (in my 
+case, after the “=” character from “?q=”). If I can't find any, I will simply delete “http://127.0.0.1:8000/?q=” by using 
+the same python function that I used for part 1 to write the title of the entry on the browser’s tab.
+
+It turns out that, indeed, such function exists (source: 
+https://stackoverflow.com/questions/12572362/how-to-get-a-string-after-a-specific-substring).
+However, remember that I will get the text from the search bar from a form, NOT from the URL (or at least, it’s not necessary 
+to get it from the URL). I will simply see the HTML form where the search bar is created, and store that text into a variable. 
+Then, I could take the user to “/wiki/(text from that variable)” to enter that entry’s page.
+
+I found the form that contains that search bar. It’s a GET request (since the method is not explicitly typed, then it’s a 
+GET request). The search bar form is in “layout.html”.
+
+I need to look up (by looking at my code from Web 50’s 1st HW assignment, that is, the Google HW) how to grab text from a 
+form after the user submits a form (or hits enter after filling in a form).
+
+It turns out that I need to use the “action” attribute of the “<form>” tag to send the data from the form to anywhere 
+else. However, I may need to look up a tutorial on how to work with forms, since I don’t know how to grab the text from a 
+form to insert it into a variable (I could look up a search bar tutorial.)
+
+Another method that I found is to obtain the data from the HTML form, and insert it into a variable by using Django. In 
+my case, I will use the GET method. I could create a variable, and insert the following data in it: 
+“request.GET.get('(name of the input tag that contains the text)')” (source: 
+http://www.learningaboutelectronics.com/Articles/How-to-create-a-form-in-Django-using-plain-HTML.php .)
+
+Then, I would insert that variable somewhere (like in the wiki_article() function) so that the page for that entry is 
+displayed. I could use something like “wiki_article(query)” to render the page of that entry. Alternatively, I could 
+use code similar to that of random_article, and simply insert the word from the user’s input instead of using “random_word”.
+
+But, to do either of those methods, I need to add a new URL into urls.py (the url would have the format 
+“/?q=(text typed by the user)” .)
+
+After further testing, I decided that it was best to use a POST method for the form. Then, since the input name is 'q', 
+I would use 'request.POST.get('q')' so  that I got the input typed by the user on the search bar, which uses a POST
+method (source: http://www.learningaboutelectronics.com/Articles/How-to-create-a-form-in-Django-using-plain-HTML.php).
+"""
+def query_search(request):
+    query = request.POST.get('q')
+    article = markdown2.markdown(util.get_entry(query))
+    article_md_format = util.get_entry(query)
+    title = article_md_format.split('\n')[0]
+
+    fixed_title = title.replace('# ', '')
+    return render(request, "encyclopedia/display_entry.html", {
+        "entries": article,
+        "title": fixed_title
+    })
+
+
 
 
 # def get_title(request):

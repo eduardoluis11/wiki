@@ -10,7 +10,15 @@ to the "/random" URL.
 
 To send the user to the "random_article" function in the views.py file, so that they can then be sent to 
 a random entry page, I need to put "views.random_article" and 'name="random_article"' in the 'path'
-attribute (source: https://youtu.be/pRNhdI9PVmg?t=10108 .) """
+attribute (source: https://youtu.be/pRNhdI9PVmg?t=10108 .) 
+
+The 'query' URL refers to when the user makes a search in the search bar, and presses the Enter key. This will 
+send the user to an entry page if the type an existent entry name in the search bar. The reason why I'm not
+typing it in the format '?q=(text)' is because I decided to give a POST method to the search form so that
+nothing appears on the URL bar. Instead, when the user types anything into the search bar and presses enter, 
+I will redirect them to a a link with the format '/query' (source: 
+https://stackoverflow.com/questions/62797803/select-an-random-page-with-django). 
+"""
 urlpatterns = [
     path("", views.index, name="index"),
 
@@ -31,5 +39,6 @@ urlpatterns = [
     # I will change the word "entry" by "word" in "<str:" so that I don't get confused by using the word "entry" so
     # much. Now, I need to go to "views.py", and put the word "word".
     path("wiki/<str:word>", views.wiki_article, name="wiki_article"),
-    path("random", views.random_article, name="random_article")
+    path("random", views.random_article, name="random_article"),
+    path("query", views.query_search, name="query_search")
 ]
