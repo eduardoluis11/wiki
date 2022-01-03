@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.core.files.storage import default_storage   # This imports the default_storage() function
 
+""" These two libraries will allow me to use the randint() function and to generate a seed. This way, I'll
+be able to generate a random number, and to make sure that the number is truly random (source:
+https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/ ). """
+from random import randint
+from random import seed
+
 """ This will allow me to only extract the name of the .md file from a PATH. Source: 
 https://www.techiedelight.com/get-filename-without-extension-python/ """
 import os
@@ -21,9 +27,23 @@ from django.shortcuts import get_object_or_404
 # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ .
 from django.http import Http404
 
+""" I need to use len() to obtain the number of elements in a python array (source: 
+https://www.askpython.com/python/array/array-length-in-python ).
+
+"len(util.list_entries())" is a number which represents the number of elements in the python array
+that contains all of the entries. However, remember that I start counting the number of elements at 0, 
+so I need to stop counting the elements once I reach one minus the last element (that means, that 
+if the array has 7 elements, the last element will be the 6th element). Otherwise, I get an error. 
+
+So, I need to subtract 1 to len(util.list_entries()) to get 1 minus the total number of elements in the "entries"
+array, so that I don't get out of range and so that I don't get any error messages. """
 def index(request):
     return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
+        "entries": util.list_entries(),
+        
+        # This is a test to see if I can send an element from a python array into index.html. Turns out that
+        # util.list_entries() generates an array.
+        "random_entry": util.list_entries()[randint(0, len(util.list_entries()) - 1)]
     })
 
 
