@@ -6,7 +6,11 @@ from . import views
 which will display a random article from the existing entries on the wiki (source: 
 https://stackoverflow.com/questions/62797803/select-an-random-page-with-django ). "random_article"
 will be a python function from views.py, which is where I need to send the user if they enter
-to the "/random" URL. """
+to the "/random" URL.
+
+To send the user to the "random_article" function in the views.py file, so that they can then be sent to 
+a random entry page, I need to put "views.random_article" and 'name="random_article"' in the 'path'
+attribute (source: https://youtu.be/pRNhdI9PVmg?t=10108 .) """
 urlpatterns = [
     path("", views.index, name="index"),
 
