@@ -19,3 +19,11 @@ INSERT IN CITATION MACHINE BEFORE TURNING THIS IN:
 8) https://docs.djangoproject.com/en/3.1/topics/http/urls/
 
 9) https://www.journaldev.com/23674/python-remove-character-from-string
+
+10) https://www.askpython.com/python/array/array-length-in-python
+
+11) https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/
+
+12) https://stackoverflow.com/questions/62797803/select-an-random-page-with-django
+
+13) https://youtu.be/pRNhdI9PVmg?t=10108
