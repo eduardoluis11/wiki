@@ -27,6 +27,10 @@ from django.shortcuts import get_object_or_404
 # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ .
 from django.http import Http404
 
+""" This generates a seed so that the random number generator generates a number that is truly random 
+(source: https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/ ). """
+seed(1)
+
 """ I need to use len() to obtain the number of elements in a python array (source: 
 https://www.askpython.com/python/array/array-length-in-python ).
 
@@ -36,7 +40,13 @@ so I need to stop counting the elements once I reach one minus the last element 
 if the array has 7 elements, the last element will be the 6th element). Otherwise, I get an error. 
 
 So, I need to subtract 1 to len(util.list_entries()) to get 1 minus the total number of elements in the "entries"
-array, so that I don't get out of range and so that I don't get any error messages. """
+array, so that I don't get out of range and so that I don't get any error messages. 
+
+randint() will generate a random number between 0 and the number of elements in the array that contains all of the 
+wiki's entries.
+
+NOTE: all of this will only work on index.html. However, I need to make the user to be able to go to a random 
+entry page from any page within the website, NOT only from the index.html page."""
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
