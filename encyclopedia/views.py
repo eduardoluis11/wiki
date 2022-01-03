@@ -31,29 +31,13 @@ from django.http import Http404
 (source: https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/ ). """
 seed(1)
 
-""" I need to use len() to obtain the number of elements in a python array (source: 
-https://www.askpython.com/python/array/array-length-in-python ).
-
-"len(util.list_entries())" is a number which represents the number of elements in the python array
-that contains all of the entries. However, remember that I start counting the number of elements at 0, 
-so I need to stop counting the elements once I reach one minus the last element (that means, that 
-if the array has 7 elements, the last element will be the 6th element). Otherwise, I get an error. 
-
-So, I need to subtract 1 to len(util.list_entries()) to get 1 minus the total number of elements in the "entries"
-array, so that I don't get out of range and so that I don't get any error messages. 
-
-randint() will generate a random number between 0 and the number of elements in the array that contains all of the 
-wiki's entries.
-
-NOTE: all of this will only work on index.html. However, I need to make the user to be able to go to a random 
-entry page from any page within the website, NOT only from the index.html page."""
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries(),
         
         # This is a test to see if I can send an element from a python array into index.html. Turns out that
         # util.list_entries() generates an array.
-        "random_entry": util.list_entries()[randint(0, len(util.list_entries()) - 1)]
+        # "random_entry": util.list_entries()[randint(0, len(util.list_entries()) - 1)]
     })
 
 
@@ -90,7 +74,7 @@ is grabbing a word from "urls.py"m which is grabbing a word from the URL which i
 Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ 
 
 If the word stored in "entry" is not one of the wiki's entries, the "get_entry()" function will return "None". 
-I want to raise a "404" error if "None2 is returned (I will display the message "page not found".)
+I want to raise a "404" error if "None" is returned (I will display the message "page not found".)
 
 I changed the word "entry" by "word" in both the function wiki_article() and on "util.get_entry(word)" so that I know
 that that word is the one being typed by the user (the one obtained by "<str:" in urlpatterns.)
@@ -210,6 +194,47 @@ def wiki_article(request, word):
         "entries": article,
         "title": fixed_title
     })
+
+""" This function will redirect the user to a random entry if they click on "Random Page" on any page of the wiki.
+
+I will redirect the user to "display_entry.html", since that the page that renders the entries. However, instead of 
+taking the entry name from input from the user, I will randomly obtain an entry name by using the randint() function.
+
+I also need to take the title of the entry and format it properly before rendering it.
+
+I need to use len() to obtain the number of elements in a python array (source: 
+https://www.askpython.com/python/array/array-length-in-python ).
+
+"len(util.list_entries())" is a number which represents the number of elements in the python array
+that contains all of the entries. However, remember that I start counting the number of elements at 0, 
+so I need to stop counting the elements once I reach one minus the last element (that means, that 
+if the array has 7 elements, the last element will be the 6th element). Otherwise, I get an error. 
+
+So, I need to subtract 1 to len(util.list_entries()) to get 1 minus the total number of elements in the "entries"
+array, so that I don't get out of range and so that I don't get any error messages. 
+
+randint() will generate a random number between 0 and the number of elements in the array that contains all of the 
+wiki's entries.
+"""
+def random_article(request):
+        # This is a test to see if I can send an element from a python array into index.html. Turns out that
+        # util.list_entries() generates an array.
+        random_entry = util.list_entries()[randint(0, len(util.list_entries()) - 1)]
+
+        # This will generate the article from the entry name obtained by the random generator
+        article = markdown2.markdown(util.get_entry(random_entry))
+        article_md_format = util.get_entry(random_entry)
+        title = article_md_format.split('\n')[0]
+
+        # This will remove the "# " characters from the title
+        fixed_title = title.replace('# ', '')
+
+        return render(request, "encyclopedia/display_entry.html", {
+        "entries": article,
+        "title": fixed_title
+    })
+
+
 
 # def get_title(request):
 #     return render(request, "encyclopedia/display_entry.html", {

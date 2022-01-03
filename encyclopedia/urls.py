@@ -2,6 +2,11 @@ from django.urls import path
 
 from . import views
 
+""" If the user clicks on "Random Page" on any page, they will be taken to the "URL/random" page, 
+which will display a random article from the existing entries on the wiki (source: 
+https://stackoverflow.com/questions/62797803/select-an-random-page-with-django ). "random_article"
+will be a python function from views.py, which is where I need to send the user if they enter
+to the "/random" URL. """
 urlpatterns = [
     path("", views.index, name="index"),
 
@@ -22,4 +27,5 @@ urlpatterns = [
     # I will change the word "entry" by "word" in "<str:" so that I don't get confused by using the word "entry" so
     # much. Now, I need to go to "views.py", and put the word "word".
     path("wiki/<str:word>", views.wiki_article, name="wiki_article"),
+    path("random", views.random_article, name="random_article")
 ]

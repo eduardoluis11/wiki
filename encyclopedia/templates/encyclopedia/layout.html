@@ -22,8 +22,10 @@
                     Create New Page
                 </div>
                 <div>
-                    <!-- This will make the user go to a random entry from the existent entries in the wiki. -->
-                    <a href="/wiki/{{random_entry}}">Random Page</a>
+                    <!-- This will make the user go to a random entry from the existent entries in the wiki.
+                    To do that, I will redirect the user to "URL/random". To do that, I need ot send the 
+                    user to the "random_article" function from views.py. -->
+                    <a href="{% url 'random_article' %}">Random Page</a>
                 </div>
                 {% block nav %}
                 {% endblock %}
