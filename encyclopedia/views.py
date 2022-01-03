@@ -279,14 +279,33 @@ But, to do either of those methods, I need to add a new URL into urls.py (the ur
 After further testing, I decided that it was best to use a POST method for the form. Then, since the input name is 'q', 
 I would use 'request.POST.get('q')' so  that I got the input typed by the user on the search bar, which uses a POST
 method (source: http://www.learningaboutelectronics.com/Articles/How-to-create-a-form-in-Django-using-plain-HTML.php).
+
+Now, I need to add an “if” statement to specify that, if the entry name exists, to send the user to that entry’s page.
+Otherwise, something else must happen. In my case, that something else means displaying a list of entries that have at least 
+one of the characters from the input typed by the user in their title.
+
+Let me look at any of the previous functions. I think that, if I insert a word that is not an existing entry name, the 
+list_entries() function returns “None”. So, I think I need to put “if None” if the user types a non-existent entry name, 
+so that I display something else if the user types a non-existent entry name.
+
+Yes, I need to use “if (condition) is None” if the user types a non-existent entry name, since the list_entries() 
+function returns “None” if the user types an entry name that doesn’t exist.
+
 """
 def query_search(request):
     query = request.POST.get('q')
-    article = markdown2.markdown(util.get_entry(query))
-    article_md_format = util.get_entry(query)
-    title = article_md_format.split('\n')[0]
 
-    fixed_title = title.replace('# ', '')
+    # This will display a list of entries that are similar to what the user typed on the search bar
+    if util.get_entry(query) is None:
+        article = 'not found'
+        fixed_title = 'Page Not Found'
+
+    else:
+        article = markdown2.markdown(util.get_entry(query))
+        article_md_format = util.get_entry(query)
+        title = article_md_format.split('\n')[0]
+
+        fixed_title = title.replace('# ', '')
     return render(request, "encyclopedia/display_entry.html", {
         "entries": article,
         "title": fixed_title
