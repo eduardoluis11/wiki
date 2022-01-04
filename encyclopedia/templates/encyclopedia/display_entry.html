@@ -82,12 +82,11 @@ I will use "title" to see if I'm getting the name of the .md file, which is what
             <ul>
                 <li><a href="/wiki/{{entry}}">{{entry}}</a></li>
             </ul>
-
-            {% if results_message != '' %}
-                <p>{{results_message}}</p>		
-            {% endif %}
-            
         {% endfor %}
+
+
+            <p>{{results_message}}</p>		
+
 
     {% else %}
         {{entries|safe}}

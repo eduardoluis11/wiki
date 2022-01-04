@@ -374,7 +374,11 @@ def query_search(request):
                 entry_titles.append(entry)		# Inserting each match into the results array
 
         if len(entry_titles) == 0:
-	        results_message == 'Sorry, there are no results for that query.'
+            # Remember to use only one "=" when assigning text to a variable
+	        results_message = 'Sorry, there are no results for that query.'
+
+            # Debugging message
+            # results_message = len(entry_titles) 
 
     else:
         article = markdown2.markdown(util.get_entry(query))
