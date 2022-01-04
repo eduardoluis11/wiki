@@ -335,15 +335,46 @@ I couldn't fix the bug that prevent the user from finding entry titles if the en
 user only types lowercase letters in the search bar. If I try using regular expressions or turning the letters into lowercase, 
 I either get an error, or I will print the entry titles in lowercase letters. So, the user will have to type uppercase
 letters on the search bar if the entry title has uppercase letters in it.
+
+I will make the entire process of getting the query typed by the user on the search bar, verifying that the query is a 
+substring of an existent entry name, turning both things into lowercase letters, and obtaining the entire list of entry 
+titles that have that substring in the views.py file. Then, I will store all of that data into an array, and send it into 
+display_entry.html. Then, on display_entry.html, I will iterate that array to display all of the results into a list.
+
+I could also create a counter that will tell me if there’s at least 1 result, or if there are no results. If there are no 
+results, I could print a message saying “Sorry: there are no results.” Alternatively, I could simply use the len() function, 
+and say that, if “len(array) = 0”, create a variable that says “Sorry, there are no results for that query”. Then, I would 
+send that variable to the display_entry.html (and there wouldn't be a problem since, if there are no results, an empty 
+screen would be rendered anyways.)
+	
+To append an element to a python array, I need to use the “.append” property (source: 
+https://www.askpython.com/python/array/python-add-elements-to-an-array ).
+
+I can’t use the “entries” variable to display the list of entry titles, since “entries” will be used for specifying 
+display_entry.html that, instead of rendering 1 entry page, that a list of entries should be displayed. So, I will need a 
+new variable to display the list of entry titles in display_entry.html.
 """
 def query_search(request):
     query = request.POST.get('q')
     list_of_entries = util.list_entries()
 
+    entry_titles = []	# Declaring array with results
+    
+    # Declaring variable with error message if no results are available
+    results_message = '' 
+
+
     # This will display a list of entries that are similar to what the user typed on the search bar
     if util.get_entry(query) is None:
         article = 'query search'
         fixed_title = 'Search results'
+
+        for entry in list_of_entries:
+            if query.lower() in entry.lower():
+                entry_titles.append(entry)		# Inserting each match into the results array
+
+        if len(entry_titles) == 0:
+	        results_message == 'Sorry, there are no results for that query.'
 
     else:
         article = markdown2.markdown(util.get_entry(query))
@@ -355,8 +386,8 @@ def query_search(request):
     return render(request, "encyclopedia/display_entry.html", {
         "entries": article,
         "title": fixed_title,
-        "query": query,
-        "list_of_entries": list_of_entries
+        "entry_titles": entry_titles,
+        "results_message": results_message
     })
 
 

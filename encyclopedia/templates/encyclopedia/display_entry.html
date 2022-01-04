@@ -78,13 +78,15 @@ I will use "title" to see if I'm getting the name of the .md file, which is what
     {% elif entries == 'query search' %}
         <h1>Search results</h1>
         <br>
-        {% for entry in list_of_entries %}
-            {% if query in entry %}
-                <ul>
-                    <li><a href="/wiki/{{entry}}">{{entry}}</a></li>
-                </ul>
-                <!-- <p>The entry exists!</p> -->
+        {% for entry in entry_titles %}
+            <ul>
+                <li><a href="/wiki/{{entry}}">{{entry}}</a></li>
+            </ul>
+
+            {% if results_message != '' %}
+                <p>{{results_message}}</p>		
             {% endif %}
+            
         {% endfor %}
 
     {% else %}
