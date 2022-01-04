@@ -1,6 +1,10 @@
 body {
     margin: 0;
     background-color: white;
+
+    /* I had to add this to fix a bug that caused the screen to move each tiem the user typed a letter on the
+    search bar */
+    /* overflow-x: hidden; */
 }
 
 code {

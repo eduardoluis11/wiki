@@ -8,7 +8,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
     </head>
-    <body>
+    <!-- BUG FIX: I had to add this to fix a bug that caused the screen to move each tiem the user typed a letter on the
+    search bar. I tried adding it on the CSS file in the "static" folder, but it didn't work. -->
+    <body style="overflow-x: hidden;">
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
                 <h2>Wiki</h2>
