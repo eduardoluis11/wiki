@@ -27,3 +27,18 @@ INSERT IN CITATION MACHINE BEFORE TURNING THIS IN:
 12) https://stackoverflow.com/questions/62797803/select-an-random-page-with-django
 
 13) https://youtu.be/pRNhdI9PVmg?t=10108
+
+14) https://stackoverflow.com/questions/12572362/how-to-get-a-string-after-a-specific-substring
+
+15) http://www.learningaboutelectronics.com/Articles/How-to-create-a-form-in-Django-using-plain-HTML.php
+
+16) eldarerathis from
+https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method
+
+17) https://www.askpython.com/python/array/python-add-elements-to-an-array
+
+18) Aaron Hall 
+    from https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method
+	
+19) https://www.geeksforgeeks.org/isupper-islower-lower-upper-python-applications/#:~:text=In%20Python%2C%20lower()%20is,all%20uppercase%20characters%20to%20lowercase. 
+
