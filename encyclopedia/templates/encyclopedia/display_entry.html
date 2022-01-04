@@ -59,15 +59,23 @@ I will use "title" to see if I'm getting the name of the .md file, which is what
 
     I ended using “'substring' in any_string” instead of using “string.find("substring")” (source: Aaron Hall 
     from https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method .)
+
+    I have a bug in which, if an entry title has upper case letters, but the user typed everything in lowercase letters, 
+    no entry titles will be displayed. To fix this, I will use the lower() function (source: 
+    https://www.geeksforgeeks.org/isupper-islower-lower-upper-python-applications/#:~:text=In%20Python%2C%20lower()%20is,all%20uppercase%20characters%20to%20lowercase. 
+    ) I will turn both the query and the array of entry titles into lowercase letter for the comparison only, but then I 
+    will leave the proper casing so that the entry titles don’t show up on the list as lower case letters.
+
+	So, instead of using “if query in entry”, I will use “if lower(query) in lower(entry)”.
     -->
     {% if entries == 'not found' %}
         <h1>Page Not Found</h1>
         <p>Sorry, but this entry does not exist.</p>
     {% elif entries == 'query search' %}
         <h1>Search results</h1>
+        <br>
         {% for entry in list_of_entries %}
             {% if query in entry %}
-                {{query}}
                 <ul>
                     <li>{{entry}}</li>
                 </ul>

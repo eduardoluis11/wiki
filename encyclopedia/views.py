@@ -303,7 +303,7 @@ Yes, I need to use “if (condition) is None” if the user types a non-existent
 returns “None” if the user types an entry name that doesn’t exist.
 
 I’m going to use the string.find("substring") function to look up the substring typed by the user on the search bar, and to 
-compare that to the existing entry titles (source: 
+compare that to the existing entry titles (source: eldarerathis from
 https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method .) If the substring matches 
 any of the entry titles, I should display those entry titles. However, the function that I just mentioned works if I’m 
 comparing one string and one substring. My string in this case would be the entry title.
@@ -326,6 +326,15 @@ sending it to the display_entry.html file. I could just simply call it “query�
 
 The “article” variable will have the value “query search” if the word typed by the user is a non-existent entry title. This 
 will make display_entry.html to display a list of all of the entry titles that have that query as a substring.
+
+I have another idea: I will use another 2 variables for the lowercase versions of “entry” and “query”, which I will only use 
+for comparing the lowercase versions of each. I will do this to prevent the entry titles from being printed in lowercase 
+letters. I will have to do this on the views.py file, and then send the lowercase variables into display_entries.html.
+
+I couldn't fix the bug that prevent the user from finding entry titles if the entry title has upper case letters, but the
+user only types lowercase letters in the search bar. If I try using regular expressions or turning the letters into lowercase, 
+I either get an error, or I will print the entry titles in lowercase letters. So, the user will have to type uppercase
+letters on the search bar if the entry title has uppercase letters in it.
 """
 def query_search(request):
     query = request.POST.get('q')
@@ -342,7 +351,7 @@ def query_search(request):
         title = article_md_format.split('\n')[0]
 
         fixed_title = title.replace('# ', '')
-        
+
     return render(request, "encyclopedia/display_entry.html", {
         "entries": article,
         "title": fixed_title,
