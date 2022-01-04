@@ -291,14 +291,50 @@ so that I display something else if the user types a non-existent entry name.
 Yes, I need to use “if (condition) is None” if the user types a non-existent entry name, since the list_entries() 
 function returns “None” if the user types an entry name that doesn’t exist.
 
+First, I need to add an “if” statement to specify that, if the entry name exists, to send the user to that entry’s page. 
+Otherwise, something else must happen. In my case, that something else means displaying a list of entries that have at 
+least one of the characters from the input typed by the user in their title.
+
+Let me look at any of the previous functions. I think that, if I insert a word that is not an existing entry name, the 
+list_entries() function returns “None”. So, I think I need to put “if None” if the user types a non-existent entry name, 
+so that I display something else if the user types a non-existent entry name.
+
+Yes, I need to use “if (condition) is None” if the user types a non-existent entry name, since the list_entries() function 
+returns “None” if the user types an entry name that doesn’t exist.
+
+I’m going to use the string.find("substring") function to look up the substring typed by the user on the search bar, and to 
+compare that to the existing entry titles (source: 
+https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method .) If the substring matches 
+any of the entry titles, I should display those entry titles. However, the function that I just mentioned works if I’m 
+comparing one string and one substring. My string in this case would be the entry title.
+
+The problem in this case is that the string is an array. That array contains the list of all of the existing entry titles. 
+So, to turn that array into a single string, I will use a “for” loop, and the “array[i]” notation.
+
+I should ideally put that directly in the “/query” page, which would be the display_entry.html. So, I would need to render 
+everything that the “for” loop is creating directly into the display_entry.html page. So, I would need to send the 
+“list_of_entries()” and “query” variables from query_search() function from the views.py file into the display_entry.html 
+page.
+
+And to avoid any conflicts with the if entries == 'not found'“” or “else” from the jinja notation in display_entry.html, 
+I will create an extra condition in the jinja notation in display_entry.html file saying something like 
+“elseif entries == ‘query search’”.
+
+The util.list_entries() function generates me the array that has all of the titles of the existing entries. I will assign a 
+name to that array, and then send it to display_entry.html. I also need to assign a name to the “query” variable before 
+sending it to the display_entry.html file. I could just simply call it “query” though.
+
+The “article” variable will have the value “query search” if the word typed by the user is a non-existent entry title. This 
+will make display_entry.html to display a list of all of the entry titles that have that query as a substring.
 """
 def query_search(request):
     query = request.POST.get('q')
+    list_of_entries = util.list_entries()
 
     # This will display a list of entries that are similar to what the user typed on the search bar
     if util.get_entry(query) is None:
-        article = 'not found'
-        fixed_title = 'Page Not Found'
+        article = 'query search'
+        fixed_title = 'Search results'
 
     else:
         article = markdown2.markdown(util.get_entry(query))
@@ -306,9 +342,12 @@ def query_search(request):
         title = article_md_format.split('\n')[0]
 
         fixed_title = title.replace('# ', '')
+        
     return render(request, "encyclopedia/display_entry.html", {
         "entries": article,
-        "title": fixed_title
+        "title": fixed_title,
+        "query": query,
+        "list_of_entries": list_of_entries
     })
 
 

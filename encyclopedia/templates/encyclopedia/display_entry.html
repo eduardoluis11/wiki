@@ -56,10 +56,25 @@ I will use "title" to see if I'm getting the name of the .md file, which is what
 
     Then, I added the "|safe" attribute so that the HTML tags (h1 and p) were parsed, so that the Markdown notation
     is finally being properly converted into HTML.
+
+    I ended using “'substring' in any_string” instead of using “string.find("substring")” (source: Aaron Hall 
+    from https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-substring-method .)
     -->
     {% if entries == 'not found' %}
         <h1>Page Not Found</h1>
         <p>Sorry, but this entry does not exist.</p>
+    {% elif entries == 'query search' %}
+        <h1>Search results</h1>
+        {% for entry in list_of_entries %}
+            {% if query in entry %}
+                {{query}}
+                <ul>
+                    <li>{{entry}}</li>
+                </ul>
+                <!-- <p>The entry exists!</p> -->
+            {% endif %}
+        {% endfor %}
+
     {% else %}
         {{entries|safe}}
     {% endif %}
