@@ -9,4 +9,46 @@ from the views.py file. -->
 {% endblock %}
 
 {% block body %}
+
+    <!-- This prints a title saying "Create New Page" on the body of the page -->
+    <h1>Create New Page</h1>
+
+    <!-- Now, to let the user add a title and a body to the new entry article, I will create 2 forms. The 1st form
+    will let the user insert a title for the entry. Meanwhile, the 2nd form will have the textarea where the user
+    will be able to insert the markdown code with the entry content. I will let the user write markdown code on the
+    title since all other .md files already have the title with a “#”, which is markdown code. That is, for
+    consistency’s sake, I will let the user also type the title using markdown.
+
+    It would be a good idea to make the 2 forms with the title and the content of the new entry to have a POST
+    method. I don’t need to put the entry and the entirety of the content for that entry into the URL. Also, that
+    would make it easy for me to get that content and send it to views.py to insert that content into a variable.
+
+    The 2 forms for the entry creation will be created on the create.html file by using the <form> and <input>
+    tags. I will add a “Submit” (or “Save”) button, so that the user doesn’t have to press the Enter key each time
+    they want to save an entry.
+
+    As the assignment says, I need to use a <textarea> tag for the content of the entry. This way, the user will be
+    able to type the description of the new entry.
+
+    This part of the assignment isn’t explicitly asking me to send the title and the body of the newly created entry
+    to a new .md file. It’s just asking me to accept input from the user. So, I will first create the form with
+    the title and the body of the new entry, the submit button, and a label for each input box.
+
+    "Text area" wasn't an input: it's a tag of its own. It's written as <textarea> (source:
+    https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_textarea .)
+
+    I will give each input a "name" attribute to be able to get their data from the views.py file once I submit
+    the form.
+
+    I NEED to add a CRF token since I'm using a POST request with this form.
+    -->
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="entry-title" placeholder="Title of the Entry">
+        <br>
+        <textarea name="entry-body" placeholder="Description of the Entry"></textarea>
+        <br>
+        <input type="submit">
+    </form>
+
 {% endblock %}
