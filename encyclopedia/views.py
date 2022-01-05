@@ -395,6 +395,35 @@ def query_search(request):
     })
 
 
+""" I think it would be good if I created a new html file exclusively for creating a new page. Of course, 
+I will inherit the styles from the layout.html file. Look at display_entry.html’s code to see how to inherit 
+the code from layout.html.
+    
+Since I need to take the user to a new page, it would be a good idea to create a new html page. That is, it 
+would be good to create a new html file. I will put it in the “templates” folder (or more specifically, I 
+will put it in the “encyclopedia” folder.) 
+
+To make the users go to a new page when clicking on the “Create New Page” text on the sidebar, I need to add 
+a link to that text first. To do that, I need to add an <a> tag with an “href” attribute. It would also be a 
+good idea to create a new link in the urls.py file to send the user to a new link once they click on 
+“Create New Page”.
+
+However, remember that, to create a new link on urls.py, I need to give it a function from the views.py file. 
+Since I want an entirely new function for the page that lets you create an entry, I need to 1st create the 
+function on views.py.
+
+Since there are a ton of steps that I need to do before being able to render the creation page, I will make the 
+page simple at first. I won’t display anything other than the sidebar and the title on the browser’s tab.
+
+After writing the code on the views.py and urls.py files, I need to add the link towards “/create” in the href 
+property of the “Create New Page” text on the sidebar, which is on the layout.html file.
+"""
+def create(request):
+    title = 'Create New Page'   # This prints "Create New Page" on the browser's tab
+
+    return render(request, "encyclopedia/create.html", {
+        "title": title,
+    })
 
 
 # def get_title(request):

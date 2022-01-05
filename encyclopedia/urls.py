@@ -18,6 +18,9 @@ typing it in the format '?q=(text)' is because I decided to give a POST method t
 nothing appears on the URL bar. Instead, when the user types anything into the search bar and presses enter, 
 I will redirect them to a a link with the format '/query' (source: 
 https://stackoverflow.com/questions/62797803/select-an-random-page-with-django). 
+
+The "/create" URL will send the user to the create() function from views.py, which will send the user to the page
+that allows them to create an entry for the wiki.
 """
 urlpatterns = [
     path("", views.index, name="index"),
@@ -40,5 +43,6 @@ urlpatterns = [
     # much. Now, I need to go to "views.py", and put the word "word".
     path("wiki/<str:word>", views.wiki_article, name="wiki_article"),
     path("random", views.random_article, name="random_article"),
-    path("query", views.query_search, name="query_search")
+    path("query", views.query_search, name="query_search"),
+    path("create", views.create, name="create")
 ]
