@@ -41,6 +41,11 @@ from the views.py file. -->
     the form.
 
     I NEED to add a CRF token since I'm using a POST request with this form.
+
+    Note: I could edit the text of the submit button to “Save”, since it’s currently only displaying text in Spanish 
+    from my computer. That can be done by assigning the <input> tag with the submit button the “value” attribute, and 
+    giving it the value of “Save” (source: 
+    https://stackoverflow.com/questions/14007613/change-text-from-submit-on-input-tag/14007619 .) 
     -->
     <form method="post">
         {% csrf_token %}
@@ -48,7 +53,7 @@ from the views.py file. -->
         <br>
         <textarea name="entry-body" placeholder="Description of the Entry"></textarea>
         <br>
-        <input type="submit">
+        <input type="submit" value="Save">
     </form>
 
 {% endblock %}
