@@ -49,9 +49,9 @@ from the views.py file. -->
     -->
     <form method="post">
         {% csrf_token %}
-        <input type="text" name="entry-title" placeholder="Title of the Entry">
+        <input type="text" name="entry-title" placeholder="Title of the Entry (e.g: JS)">
         <br>
-        <textarea name="entry-body" placeholder="Description of the Entry"></textarea>
+        <textarea name="entry-body" placeholder="Description of the Entry (e.g: # JS (line break) JS is a programming language )"></textarea>
         <br>
         <input type="submit" value="Save">
     </form>
