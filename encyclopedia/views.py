@@ -27,6 +27,10 @@ from django.shortcuts import get_object_or_404
 # Source: https://docs.djangoproject.com/en/3.1/intro/tutorial03/ .
 from django.http import Http404
 
+# This is a function that will allow me to redirect a user if they get a POST request (source: 
+# https://www.fullstackpython.com/django-http-httpresponseredirect-examples.html )
+from django.http import HttpResponseRedirect
+
 """ This generates a seed so that the random number generator generates a number that is truly random 
 (source: https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/ ). """
 seed(1)
@@ -497,6 +501,10 @@ If the user types the name of an entry that doesn't exist, they will be taken in
 The body and the title of that page will be that of what was obtained from the "entry-title" and "entry-body" fields
 from the creation form. The 'return render(request, "encyclopedia/display_entry.html"' code snippet will only 
 be executed after the "else" statement, and will take the user directly to the page of the newly created entry.
+
+The HttpResponseRedirect() function will allow me to redirect a user to another page, that is, the URL of the URL
+bar will change (source: Willem Van Onsem's reply from 
+https://stackoverflow.com/questions/56164972/cant-do-a-simple-redirect-after-post-request-in-django-using-httpresponseredir)
 """
 def create(request):
     title = 'Create New Page'   # This prints "Create New Page" on the browser's 
@@ -529,10 +537,8 @@ def create(request):
             fixed_title = title.replace('# ', '')
 
             # This will send the user the newly created enttry page right after clicking "Save"
-            return render(request, "encyclopedia/display_entry.html", {
-                "entries": article,
-                "title": fixed_title
-            })
+            
+            return HttpResponseRedirect(f"/wiki/{entry_title}")
 
     return render(request, "encyclopedia/create.html", {
         "title": title,
@@ -574,8 +580,6 @@ def create(request):
 #     return render(request, "encyclopedia/display_entry.html", {
 #         "entries": util.list_entries()
 #     })
-
-
 
 
 
