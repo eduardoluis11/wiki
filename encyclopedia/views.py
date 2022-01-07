@@ -465,6 +465,12 @@ BUG: if the user types a "#" in the title, the entry will be created, but it
 will be impossible to enter into that entry's page (unless you use the "random" button). Also, the title of the newly
 created entry won't display in <h1> text once the user enters into a newly created entry (even if they typed the title
 without any "#"). In fact, the title won't even be displayed at all on the newly created entry page.
+
+BUG FIX: The problem of the titles with "#" giving me trouble was that the markdown code should NOT be typed in the
+"title" field of the creation form. Instead, it should be typed on the <textarea> tag, that is, on the "description" field.
+Also, remember to leave an space between the title and the "#". Also, remember that I'm typing the title of the entry twice:
+once on the "title" field of the creation form, and once on the "description" field. It should be typed on both the "title"
+input, and on the 1st line of the "description" field. 
 """
 def create(request):
     title = 'Create New Page'   # This prints "Create New Page" on the browser's 
