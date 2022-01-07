@@ -417,12 +417,107 @@ page simple at first. I won’t display anything other than the sidebar and the 
 
 After writing the code on the views.py and urls.py files, I need to add the link towards “/create” in the href 
 property of the “Create New Page” text on the sidebar, which is on the layout.html file.
+
+The submit button already serves the function of saving the new page. The only problem is that, currently, I haven’t 
+added the function to save the new entry to the website.
+
+To save the newly created entry (the user should use markdown notation), I need to add a new function on the views.py 
+file. I will give it a different name other than “save_entry()” to avoid any issues with the existing function. I will call 
+the function “add_entry()”. I don’t need to add any parameters, since the title and the description of the entry will be 
+sent to the save_entry() function, which already accepts 2 parameters (and it’s an existent function.) 
+	
+The new function that I’ll create will have 3 purposes: detect if the user has submitted the form from the create.html 
+page, send the title and the description of the entry typed by the user to the save_entry() function, and redirect the 
+user to the page of the newly created entry. To redirect the user to the newly created page, I could use code like 
+‘f"wiki/{variable_with_the_title}"’.
+
+First, to detect whether the user has hit the submit button from the “/create” page, I could use the same code as I did in 
+the search algorithm. That is, I could use the “request.POST.get('name_of_the_input')” function. I would need to call it 
+twice: once for the title, and once for the content of the entry. I will insert each of the calls of the request.POST.get() 
+function into 2 separate variables.
+
+Then, to create the entry and save it into the disk (that is, to save it into the website), I will call the save_entry(1st 
+parameter, 2nd parameter) function, where the 1st and 2nd parameters will be the 2 variables that I just created to insert 
+the title and the content of the entry typed by the user.
+
+Finally, to redirect the user to the page of the newly created entry, I will use the return render() function, but where 
+the link where I will be redirected will be “/wiki/variable_with_title_of_the_entry”. To do that, I could use Python’s 
+“f” function, which will read variables if I insert them between “{}”. So, I would need to use code like this: 
+return render(request, f"encyclopedia/wiki/{variable_with_entry_title}").
+
+I had a mistake in my way of thinking: I actually need to redirect the user to the display_entry.html page, and I need to 
+specify that I need to go to the page of the newly created page. That can be done by adding a variable in the render() 
+function called “entries” (same as I had done previously whenever I call the display_entry.hmtl page), but I need to specify 
+that entries will have the same value as the the “entry-title” variable (that is, the variable that gets the title of the 
+entry from the “/create” page form.)
+
+Also, since I don’t know a more efficient way of doing this, I will have to use the get_entry() function to get the newly 
+created entry, get the title from it, and transform it from markdown to HTML (just like I did for the wiki_article() function).
+
+To start making the code that saves an entry to the disk (and therefore, to the wiki), I need to leave the 
+form in create.html without the "action" attribute (for the time being) (source: https://youtu.be/S44qx6DoIv4?t=16507 ). 
+Then to detect if the user has clicked the submit button (so that it sends POST data from the form), I need to 
+use an "if" statement with the "request.POST" function (source: arulmr's reply from 
+https://stackoverflow.com/questions/16053865/handling-requests-in-django ). This will both detect if the form has 
+been submitted, and it will pick up the data from the inputs with both the title and the description of the new entry.
+
+BUG: if the user types a "#" in the title, the entry will be created, but it
+will be impossible to enter into that entry's page (unless you use the "random" button). Also, the title of the newly
+created entry won't display in <h1> text once the user enters into a newly created entry (even if they typed the title
+without any "#"). In fact, the title won't even be displayed at all on the newly created entry page.
 """
 def create(request):
-    title = 'Create New Page'   # This prints "Create New Page" on the browser's tab
+    title = 'Create New Page'   # This prints "Create New Page" on the browser's 
+    
+    # Obtaining the title and the description from the form
+    if request.POST:
+        entry_title = request.POST.get('entry-title')
+        entry_description = request.POST.get('entry-body') 
+
+        # This saves the entry in the website
+        util.save_entry(entry_title, entry_description)
+
+        # Transforming the article from Markdown to HTML
+        article = markdown2.markdown(util.get_entry(entry_title))
+
+        # This splits the text and obtains the .md file’s title
+        title = entry_description.split('\n')[0]
+
+        # This will remove the "# " characters from the title
+        fixed_title = title.replace('# ', '')
 
     return render(request, "encyclopedia/create.html", {
         "title": title,
+    })
+
+
+""" DO NOT USE. This doesn't work.
+"""
+def add_page(request):
+
+	# Obtaining the title and the description from the form
+    if request.POST:
+        entry_title = request.POST.get('entry-title')
+        entry_description = request.POST.get('entry-body') 
+
+        # This saves the entry in the website
+        util.save_entry(entry_title, entry_description)
+
+        # Transforming the article from Markdown to HTML
+        article = markdown2.markdown(util.get_entry(entry_title))
+
+        # This splits the text and obtains the .md file’s title
+        title = entry_description.split('\n')[0]
+
+        # This will remove the "# " characters from the title
+        fixed_title = title.replace('# ', '')
+
+	# Redirecting the user to the newly created page
+    return render(request, "encyclopedia/display_entry.html", {
+        "entries": article,
+        "title": fixed_title,
+        "entry_title": entry_title,
+        "entry_description": entry_description
     })
 
 

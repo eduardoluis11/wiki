@@ -21,6 +21,9 @@ https://stackoverflow.com/questions/62797803/select-an-random-page-with-django).
 
 The "/create" URL will send the user to the create() function from views.py, which will send the user to the page
 that allows them to create an entry for the wiki.
+
+I added a new URL called 'created-article', which will activate the create_article() function from views.py (so
+that a new article can be added to the website.)
 """
 urlpatterns = [
     path("", views.index, name="index"),
