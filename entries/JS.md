@@ -1,3 +1,1 @@
-#JS
-
-Testing with another javascript entry.
+JS is awesome

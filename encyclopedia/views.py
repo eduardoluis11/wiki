@@ -471,60 +471,92 @@ BUG FIX: The problem of the titles with "#" giving me trouble was that the markd
 Also, remember to leave an space between the title and the "#". Also, remember that I'm typing the title of the entry twice:
 once on the "title" field of the creation form, and once on the "description" field. It should be typed on both the "title"
 input, and on the 1st line of the "description" field. 
+
+To show an error message if the user types the title of an already existing entry, I will use the util.get_entry() function 
+at the beginning of the create() function to look up if the input typed by the user in the “title” field is the title of an 
+already existing entry. If it is, I will display the error message. For the time being, I will keep the user in the 
+create.html page if they type the title of an existing entry (that is, they won’t leave the page to see the error message).
+
+Then, I will use an “if” statement on the create.html file to check if there was an error. If there is, I will display the 
+error message.
+
+I could use the “is not None” operand to specify that, if an entry exist, to execute some code (source:  Daniel Stutzbach’s 
+reply from https://stackoverflow.com/questions/2710940/python-if-x-is-not-none-or-if-not-x-is-none .) This will be very 
+similar to what I did in the wiki_article() function. That is, I will use “util.get_entry(title_typed_by_the_user)” and 
+“is not None” to check if the title typed by the user is the name of the entry. If that condition checks, I will assign 
+an error message to a variable.
+
+Then, I will send that variable to create.html. Then, in create.html, I will specify that, if the value of that variable is 
+an error message, I will print the error message (I think I will style it in red.) 
+
+Since the util.get_entry() function wasn't obtaining the title typed by the user if I just inserted the "entry-title" 
+variable, I ended up using request.POST.get('entry-title') to make it work. It's not efficient doing it this way, but
+it works.
 """
 def create(request):
     title = 'Create New Page'   # This prints "Create New Page" on the browser's 
+
+    # This will store an error message if the user types an existing entry
+    error_message = ''
     
     # Obtaining the title and the description from the form
     if request.POST:
         entry_title = request.POST.get('entry-title')
-        entry_description = request.POST.get('entry-body') 
+        entry_description = request.POST.get('entry-body')
 
-        # This saves the entry in the website
-        util.save_entry(entry_title, entry_description)
+        # This checks if the title of the entry already exists in the website
+        if util.get_entry(request.POST.get('entry-title')) is not None:
+            error_message = 'Error'
+        
+        # If the entry doesn't exist, I will create a new entry
+        else: 
 
-        # Transforming the article from Markdown to HTML
-        article = markdown2.markdown(util.get_entry(entry_title))
+            # This saves the entry in the website
+            util.save_entry(entry_title, entry_description)
 
-        # This splits the text and obtains the .md file’s title
-        title = entry_description.split('\n')[0]
+            # Transforming the article from Markdown to HTML
+            article = markdown2.markdown(util.get_entry(entry_title))
 
-        # This will remove the "# " characters from the title
-        fixed_title = title.replace('# ', '')
+            # This splits the text and obtains the .md file’s title
+            title = entry_description.split('\n')[0]
+
+            # This will remove the "# " characters from the title
+            fixed_title = title.replace('# ', '')
 
     return render(request, "encyclopedia/create.html", {
         "title": title,
+        "error_message": error_message
     })
 
 
 """ DO NOT USE. This doesn't work.
 """
-def add_page(request):
+# def add_page(request):
 
-	# Obtaining the title and the description from the form
-    if request.POST:
-        entry_title = request.POST.get('entry-title')
-        entry_description = request.POST.get('entry-body') 
+# 	# Obtaining the title and the description from the form
+#     if request.POST:
+#         entry_title = request.POST.get('entry-title')
+#         entry_description = request.POST.get('entry-body') 
 
-        # This saves the entry in the website
-        util.save_entry(entry_title, entry_description)
+#         # This saves the entry in the website
+#         util.save_entry(entry_title, entry_description)
 
-        # Transforming the article from Markdown to HTML
-        article = markdown2.markdown(util.get_entry(entry_title))
+#         # Transforming the article from Markdown to HTML
+#         article = markdown2.markdown(util.get_entry(entry_title))
 
-        # This splits the text and obtains the .md file’s title
-        title = entry_description.split('\n')[0]
+#         # This splits the text and obtains the .md file’s title
+#         title = entry_description.split('\n')[0]
 
-        # This will remove the "# " characters from the title
-        fixed_title = title.replace('# ', '')
+#         # This will remove the "# " characters from the title
+#         fixed_title = title.replace('# ', '')
 
-	# Redirecting the user to the newly created page
-    return render(request, "encyclopedia/display_entry.html", {
-        "entries": article,
-        "title": fixed_title,
-        "entry_title": entry_title,
-        "entry_description": entry_description
-    })
+# 	# Redirecting the user to the newly created page
+#     return render(request, "encyclopedia/display_entry.html", {
+#         "entries": article,
+#         "title": fixed_title,
+#         "entry_title": entry_title,
+#         "entry_description": entry_description
+#     })
 
 
 # def get_title(request):
