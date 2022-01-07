@@ -492,6 +492,11 @@ an error message, I will print the error message (I think I will style it in red
 Since the util.get_entry() function wasn't obtaining the title typed by the user if I just inserted the "entry-title" 
 variable, I ended up using request.POST.get('entry-title') to make it work. It's not efficient doing it this way, but
 it works.
+
+If the user types the name of an entry that doesn't exist, they will be taken into the display_entry.html page.
+The body and the title of that page will be that of what was obtained from the "entry-title" and "entry-body" fields
+from the creation form. The 'return render(request, "encyclopedia/display_entry.html"' code snippet will only 
+be executed after the "else" statement, and will take the user directly to the page of the newly created entry.
 """
 def create(request):
     title = 'Create New Page'   # This prints "Create New Page" on the browser's 
@@ -523,9 +528,15 @@ def create(request):
             # This will remove the "# " characters from the title
             fixed_title = title.replace('# ', '')
 
+            # This will send the user the newly created enttry page right after clicking "Save"
+            return render(request, "encyclopedia/display_entry.html", {
+                "entries": article,
+                "title": fixed_title
+            })
+
     return render(request, "encyclopedia/create.html", {
         "title": title,
-        "error_message": error_message
+        "error_message": error_message,
     })
 
 
