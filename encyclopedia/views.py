@@ -545,6 +545,31 @@ def create(request):
         "error_message": error_message,
     })
 
+""" This will let me edit an existing entry.
+
+As to how to know from which entry to get the description from, that is, how to know which entry I should edit, I will need 
+a variable that stores the title of the entry I’m editing. To do that, I could make the edit() function similar to the 
+wiki_article() one. Look at urls.py. To get the name of the entry that I want to display when I click on them on the home 
+page, I get the title of the entry from the “word” variable from "wiki/<str:word>" in urls.py. Then I send the title stored 
+in “word” into a parameter from the wiki_article() function (in this case, in wiki_article(request, WORD) .)
+
+So, I will need to add a parameter in the edit() function that stores the title of the entry that I want to edit, which will 
+come from the urls.py file from a <str:> tag.
+
+I could make the edit URL to have this format: “/wiki/entry_title/edit”, since I need to click on a button in the page of 
+the entry that I want to edit. This way, I can obtain the title of the entry from the URL in urls.py, and then send that from 
+urls.py to views.py to obtain the title of the entry that I want to edit. 
+"""
+def edit(request, word):
+
+    # This will obtain an entry fromthe title of the entry, which will be provided on the URL
+    existing_description = util.get_entry(word)
+
+    return render(request, "encyclopedia/edit.html", {
+        "existing_description": existing_description
+    })
+
+
 
 """ DO NOT USE. This doesn't work.
 """

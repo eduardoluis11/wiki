@@ -1,0 +1,34 @@
+<!-- This is the page where the user will be able to edit an existing entry for the wiki -->
+
+{% extends "encyclopedia/layout.html" %}
+
+<!-- I will add a title that says "Edit entry" on the browser's tab. I will send it from a new function
+from the views.py file. -->
+{% block title %}
+    Edit Page
+{% endblock %}
+
+{% block body %}
+
+    <!-- This prints a title saying "Edit Page" on the body of the page -->
+    <h1>Edit Page</h1>
+
+    <!-- I will first write the HTML code for the page for editing existing entries. Since the question doesn’t tell me 
+    to let the user edit the title, and it only tells me to use a <textarea>, I will assume that the user shouldn’t 
+    edit the title, only the entry’s description. So, at first, I will only have 2 inputs: a <textarea>, and the 
+    submit button.
+
+	To pre-populate the <textarea> with the existing entry’s description, I will need to add the “value” attribute to 
+    the <textarea> tag that will contain the description of that entry (source: 
+    https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_value .) Then, the value that I need to add 
+    to the “value” tag will be obtained via jinja notation from a function from the views.py file. I will use code 
+    like “<textarea type='text' name='entry-title' value='{{title}}'></textarea>”. 
+    -->
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="edit-entry-body">{{existing_description}}</textarea>
+        <br>
+        <input type="submit" value="Save">
+    </form>
+
+{% endblock %}
