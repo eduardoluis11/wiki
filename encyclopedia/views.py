@@ -575,6 +575,11 @@ will be the currently typed description in the <textarea> tag. To do that, I nee
 submitting that form, and by obtaining the POST data from that form by using an “if” statement that checks if a POST request 
 has been sent. I need to send the text from the description into a variable, which will be obtained using “if request.POST” 
 and the “request.POST.get()” functions.
+
+This should be similar to the create() function, where I have code that redirects the user to the newly created page after 
+they click on “Save”. I think I need to use the HttpResponseRequest() function to redirect the user to another link. In 
+this case, I need to redirect the user to the entry page of the entry that I edited. I don’t have to send them to the 
+edition page, but the standard page that displays that entry. 
 """
 def edit(request, word):
 
@@ -589,6 +594,9 @@ def edit(request, word):
 
         # This saves the edited entry in the website
         util.save_entry(word, entry_description)
+
+        # This redirects the user to the entry page of the entry they just edited 
+        return HttpResponseRedirect(f"/wiki/{word}")
 
     return render(request, "encyclopedia/edit.html", {
         "existing_description": existing_description
