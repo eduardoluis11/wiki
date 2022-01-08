@@ -156,7 +156,7 @@ def wiki_article(request, word):
         # file = default_storage.open(f"entries/{word}.md")
 
         """ These two lines will get the name of the file from the PATH of the .md file that has the text for the 
-        current entry, which is what I want to use as the title (source: 
+        current entry, which is what I want to use as the title (source: James Errico's reply on
         https://stackoverflow.com/questions/323515/how-to-get-the-name-of-an-open-file/324326 .) The problem with
         this is that the text is always being converted into lowercase. I want to have upper-case and lower-case 
         letters if the original name of the file hs both upper and lower case letters. 
@@ -256,7 +256,7 @@ I will look for a python function that allows me to search for text from a strin
 case, after the “=” character from “?q=”). If I can't find any, I will simply delete “http://127.0.0.1:8000/?q=” by using 
 the same python function that I used for part 1 to write the title of the entry on the browser’s tab.
 
-It turns out that, indeed, such function exists (source: 
+It turns out that, indeed, such function exists (source: Joran Beasley's reply from
 https://stackoverflow.com/questions/12572362/how-to-get-a-string-after-a-specific-substring).
 However, remember that I will get the text from the search bar from a form, NOT from the URL (or at least, it’s not necessary 
 to get it from the URL). I will simply see the HTML form where the search bar is created, and store that text into a variable. 

@@ -15,7 +15,8 @@
             <div class="sidebar col-lg-2 col-md-3">
                 <h2>Wiki</h2>
                 <!-- I changed the request method of the form to "post". To make it work with the POST method, I added 
-                a csrf token (source: https://stackoverflow.com/questions/62797803/select-an-random-page-with-django .)
+                a csrf token (source: Willem Van Onsem's reply on 
+                https://stackoverflow.com/questions/62797803/select-an-random-page-with-django .)
                 Also, I added "url 'query_search'" to go to the urls.py file and look for the query_search link, 
                 and find the query_search function from the views.py file. -->
                 <form action="{% url 'query_search' %}" method="post">

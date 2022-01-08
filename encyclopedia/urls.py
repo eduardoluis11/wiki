@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 
 """ If the user clicks on "Random Page" on any page, they will be taken to the "URL/random" page, 
-which will display a random article from the existing entries on the wiki (source: 
+which will display a random article from the existing entries on the wiki (source: Willem Van Onsem's reply on
 https://stackoverflow.com/questions/62797803/select-an-random-page-with-django ). "random_article"
 will be a python function from views.py, which is where I need to send the user if they enter
 to the "/random" URL.
@@ -16,7 +16,7 @@ The 'query' URL refers to when the user makes a search in the search bar, and pr
 send the user to an entry page if the type an existent entry name in the search bar. The reason why I'm not
 typing it in the format '?q=(text)' is because I decided to give a POST method to the search form so that
 nothing appears on the URL bar. Instead, when the user types anything into the search bar and presses enter, 
-I will redirect them to a a link with the format '/query' (source: 
+I will redirect them to a a link with the format '/query' (source: Willem Van Onsem's reply on 
 https://stackoverflow.com/questions/62797803/select-an-random-page-with-django). 
 
 The "/create" URL will send the user to the create() function from views.py, which will send the user to the page

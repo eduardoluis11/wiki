@@ -14,7 +14,7 @@ INSERT IN CITATION MACHINE BEFORE TURNING THIS IN:
 
 6) https://www.codegrepper.com/code-examples/python/extract+text+before+specific+word+python
 
-7) https://stackoverflow.com/questions/323515/how-to-get-the-name-of-an-open-file/324326
+7) James Errico's reply on https://stackoverflow.com/questions/323515/how-to-get-the-name-of-an-open-file/324326
 
 8) https://docs.djangoproject.com/en/3.1/topics/http/urls/
 
@@ -24,11 +24,11 @@ INSERT IN CITATION MACHINE BEFORE TURNING THIS IN:
 
 11) https://machinelearningmastery.com/how-to-generate-random-numbers-in-python/
 
-12) https://stackoverflow.com/questions/62797803/select-an-random-page-with-django
+12) Willem Van Onsem's reply on https://stackoverflow.com/questions/62797803/select-an-random-page-with-django
 
 13) https://youtu.be/pRNhdI9PVmg?t=10108
 
-14) https://stackoverflow.com/questions/12572362/how-to-get-a-string-after-a-specific-substring
+14) Joran Beasley's reply from https://stackoverflow.com/questions/12572362/how-to-get-a-string-after-a-specific-substring
 
 15) http://www.learningaboutelectronics.com/Articles/How-to-create-a-form-in-Django-using-plain-HTML.php
 
@@ -42,3 +42,21 @@ https://stackoverflow.com/questions/3437059/does-python-have-a-string-contains-s
 	
 19) https://www.geeksforgeeks.org/isupper-islower-lower-upper-python-applications/#:~:text=In%20Python%2C%20lower()%20is,all%20uppercase%20characters%20to%20lowercase. 
 
+20) https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_value
+
+21) https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_textarea
+
+22) Ry-♦'s reply from https://stackoverflow.com/questions/14007613/change-text-from-submit-on-input-tag/14007619
+
+23) https://www.fullstackpython.com/django-http-httpresponseredirect-examples.html 
+
+24) https://youtu.be/S44qx6DoIv4?t=16507
+
+25) arulmr's reply from 
+https://stackoverflow.com/questions/16053865/handling-requests-in-django
+
+26) Daniel Stutzbach’s reply from 
+https://stackoverflow.com/questions/2710940/python-if-x-is-not-none-or-if-not-x-is-none
+
+27) Willem Van Onsem's reply from 
+https://stackoverflow.com/questions/56164972/cant-do-a-simple-redirect-after-post-request-in-django-using-httpresponseredir
