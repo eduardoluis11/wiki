@@ -87,6 +87,9 @@ To properly convert from Markdown into HTML so that the entry text doesn't have 
 each letter, and so that the "#" characters are able to make the text bold or italices (as it should in Markdown
 format), I will use the "markdown.markdown(ENTRY_TEXT_VARIABLE)" function from the markdown2 package 
 (source: https://github.com/trentm/python-markdown2 .)
+
+I'm sending the "word" variable to display_entry.html to send the title of the entry's file. This will be used 
+to make the user enter into the edition page of that particular entry if they click on the 'Edit Entry' link. 
 """
 def wiki_article(request, word):
     # article = markdown2.markdown(util.get_entry(word))
@@ -196,7 +199,8 @@ def wiki_article(request, word):
         # I will insert here the "article" variable (the word typed by the user on the URL bar.) This seems to be like
         # sanitizing data in PHP.
         "entries": article,
-        "title": fixed_title
+        "title": fixed_title,
+        "title_of_entry_file": word
     })
 
 """ This function will redirect the user to a random entry if they click on "Random Page" on any page of the wiki.

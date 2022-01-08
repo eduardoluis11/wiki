@@ -71,6 +71,13 @@ I will use "title" to see if I'm getting the name of the .md file, which is what
     To make the entry titles displayed on the previous algorithm to be clickable and send the user to its respective entry 
     page, I will need to add a ‘href=”/wiki/{{entry}}”’ to each item from the list of results. Or in other words, I need to 
     do the exact same thing that I did for index.html to display the list of clickable links.
+
+    Now, I need to add a link on the page of the existing entries to take them to the page that will let them edit the 
+    entry. I could add a n <a> tag in the display_entry.html that will take the user to the edit page for that particular entry.
+    
+    BUG: if the title of the entry that I want to edit has an space, I won't be taken to the edition page of that entry.
+    I need to get the title of the entry from the URL, NOT from the first line of the .md file. To fix this bug, I could
+    obtain the title of the .md file from the views.py file, and then send it as a variable to this file via Jinja notation. 
     -->
     {% if entries == 'not found' %}
         <h1>Page Not Found</h1>
@@ -90,6 +97,8 @@ I will use "title" to see if I'm getting the name of the .md file, which is what
 
     {% else %}
         {{entries|safe}}
+
+        <a href="/wiki/{{title_of_entry_file}}/edit">Edit entry</a>
     {% endif %}
 
     <!-- I will use this to see if I'm getting the name of the .md file, which is what I'll use as the entry's title.

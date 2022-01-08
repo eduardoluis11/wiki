@@ -23,6 +23,9 @@ from the views.py file. -->
     https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_input_value .) Then, the value that I need to add 
     to the “value” tag will be obtained via jinja notation from a function from the views.py file. I will use code 
     like “<textarea type='text' name='entry-title' value='{{title}}'></textarea>”. 
+
+    DO NOT add space between the <textarea> tag and the jinja notation that gets the existing description, or else
+    that indentation will be added to the description of the entry. 
     -->
     <form method="post">
         {% csrf_token %}
