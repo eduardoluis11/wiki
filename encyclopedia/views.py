@@ -563,11 +563,32 @@ come from the urls.py file from a <str:> tag.
 I could make the edit URL to have this format: “/wiki/entry_title/edit”, since I need to click on a button in the page of 
 the entry that I want to edit. This way, I can obtain the title of the entry from the URL in urls.py, and then send that from 
 urls.py to views.py to obtain the title of the entry that I want to edit. 
+
+I will need to use the util.save_entry() function to save the edited text. I will need to overwrite the description of the 
+entry that I will be editing. I will check the create() code, and see how I’m saving the entry into the website. After 
+checking it, I realized that the function will overwrite the existing entry if I add the title of an existing entry. Also, 
+I need to give that function 2 parameters: the title of that entry, and its description.
+
+So, I just need to call the util.save_entry() function. The title that I will send as the 1st parameter of that function 
+will be the “word” variable (which will obtain the name of the entry from the URL. ) Then, the description that I will send 
+will be the currently typed description in the <textarea> tag. To do that, I need to obtain the text from the <textarea> by 
+submitting that form, and by obtaining the POST data from that form by using an “if” statement that checks if a POST request 
+has been sent. I need to send the text from the description into a variable, which will be obtained using “if request.POST” 
+and the “request.POST.get()” functions.
 """
 def edit(request, word):
 
     # This will obtain an entry fromthe title of the entry, which will be provided on the URL
     existing_description = util.get_entry(word)
+
+    # This checks if the user has submitted the form from the edition page
+    if request.POST:
+
+        # This obtains the description that was edited by the user
+        entry_description = request.POST.get('edit-entry-body')
+
+        # This saves the edited entry in the website
+        util.save_entry(word, entry_description)
 
     return render(request, "encyclopedia/edit.html", {
         "existing_description": existing_description
