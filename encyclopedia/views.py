@@ -223,6 +223,15 @@ array, so that I don't get out of range and so that I don't get any error messag
 
 randint() will generate a random number between 0 and the number of elements in the array that contains all of the 
 wiki's entries.
+
+I had a bug in which, if I entered into an entry page from "Random page", and then tried to edit that entry, I would
+get an error message since I would enter into "/wiki//edit", which I didn't define. To fix this, I had 
+to send a variable called "title_of_the_entry_file" to display_entry.html, and the value of tha variable would be
+the entry name that I got at random by calling the util.get_entry() function. I used "title_of_the_entry_file" 
+as the name of the variable since I'm getting the name of the entries from wiki_article() in a variable of that same 
+name. So, whenever display_entry.html looks for the value of the "title_of_the_entry_file", it won't know if it's
+from wiki_article() or from random_article(). So, display_entry.html will always get the name of the entry in a variable,
+regardless of if it is from wiki_article() or from random_article().  
 """
 def random_article(request):
         # This is a test to see if I can send an element from a python array into index.html. Turns out that
@@ -239,7 +248,8 @@ def random_article(request):
 
         return render(request, "encyclopedia/display_entry.html", {
         "entries": article,
-        "title": fixed_title
+        "title": fixed_title,
+        "title_of_entry_file": random_entry
     })
 
 """ This will make the user enter into an entry page if the type an existent entry name, or to a list of pages
