@@ -121,11 +121,11 @@ def wiki_article(request, word):
     library is not a universal solution.
 
 	I could use a function in Python that splits all the text and inserts it into an array, which, in my case, it would be 
-    the split() function (source: https://www.codegrepper.com/code-examples/python/extract+text+before+specific+word+python ). 
+    the split() function (source: Tinky Winky from https://www.codegrepper.com/code-examples/python/extract+text+before+specific+word+python ). 
     Each section of the text would be inserted as an element of that array. The character that would be used for splitting 
     the entry text would be the line break, that is, “\n”. 
 
-    However, the problem with suing split() as I mentioned in the previous paragraph is that I will also grab the “#” sign 
+    However, the problem with using split() as I mentioned in the previous paragraph is that I will also grab the “#” sign 
     and a space alongside teh title (i.e: I will grab “# CSS” instead of “CSS”). So, I need to remove the first 2 characters 
     (“#” and the space). To do this, I will use the replace() function from Python (source: 
     https://www.journaldev.com/23674/python-remove-character-from-string .)
